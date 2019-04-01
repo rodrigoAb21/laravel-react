@@ -2,25 +2,23 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Header from './Header'
 
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+import Home from './Home';
+import About from './About';
+
+
 export default class Index extends Component {
     render() {
         return (
-            <div className="container-fluid">
-                <Header/>
-                <div className="container pt-5 mt-5">
-                    <div className="row justify-content-center">
-                        <div className="col-md-8">
-                            <div className="card">
-                                <div className="card-header">Example Component</div>
-
-                                <div className="card-body">
-                                    I'm an example component!
-                                </div>
-                            </div>
-                        </div>
+            <Router>
+                <div className="container-fluid">
+                    <Header/>
+                    <div className="container mt-5 pt-5">
+                        <Route path="/" exact strict component={Home}/>
+                        <Route path="/about" exact strict component={About}/>
                     </div>
                 </div>
-            </div>
+            </Router>
         );
     }
 }
