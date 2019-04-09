@@ -11,8 +11,4 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::resource('/categorias', 'Api\CategoriaController');
+Route::view('/{path?}', 'app');

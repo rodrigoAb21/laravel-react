@@ -14,13 +14,13 @@ export default class Index extends Component {
         return (
             <Router>
 
-                    <Header/>
-                    <div className="mt-5 pt-5">
-                        <Route path="/" exact component={Home}/>
-                        <Route path="/about" exact component={About}/>
-                        <Route path="/categorias" exact component={Categoria}/>
-                        <Route path="/categorias/create" exact component={CategoriaCreate}/>
-                    </div>
+                <Header/>
+                <div className="container-fluid mt-5 pt-5">
+                    <Route path="/" exact component={Home}/>
+                    <Route path="/about" exact component={About}/>
+                    <Route path="/categorias" exact component={Categoria}/>
+                    <Route path="/categorias/create" exact component={CategoriaCreate}/>
+                </div>
 
             </Router>
         );

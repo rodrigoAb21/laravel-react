@@ -13,7 +13,7 @@ export default class Index extends Component {
     }
 
     componentDidMount(){
-        axios.get('http://127.0.0.1:8000/categorias')
+        axios.get('api/categorias')
             .then( response => {
                 this.setState({
                     categorias: response.data

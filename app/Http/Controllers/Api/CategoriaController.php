@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Categoria;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use function MongoDB\BSON\toJSON;
 
 class CategoriaController extends Controller
 {
@@ -15,7 +16,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        return Categoria::all()->where('visible', '=', true);
+        $categoria = Categoria::all()->where('visible', '=', true);
+        return $categoria->toJson();
     }
 
     /**
@@ -36,7 +38,12 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $categoria = new Categoria();
+        $categoria->nombre = $request['nombre'];
+        $categoria->visible = true;
+        $categoria->save();
+
+        return response()->json('ok',200);
     }
 
     /**

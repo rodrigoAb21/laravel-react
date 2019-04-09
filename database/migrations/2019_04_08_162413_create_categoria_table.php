@@ -16,7 +16,7 @@ class CreateCategoriaTable extends Migration
         Schema::create('categoria', function (Blueprint $table) {
             $table->increments('id');
             $table->text('nombre');
-            $table->boolean('visible');
+            $table->boolean('visible')->default(true);
         });
     }
 
