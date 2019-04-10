@@ -16,8 +16,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $categoria = Categoria::all()->where('visible', '=', true);
-        return $categoria->toJson();
+        $categorias = Categoria::where('visible', '=', true)->get();
+        return $categorias->toJson();
     }
 
     /**
@@ -65,7 +65,9 @@ class CategoriaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categoria = Categoria::findOrFail($id);
+
+        return $categoria;
     }
 
     /**
@@ -77,7 +79,11 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $categoria = Categoria::findOrFail($id);
+        $categoria->nombre = $request['nombre'];
+        $categoria->save();
+
+        return response()->json('ok',200);
     }
 
     /**
@@ -88,6 +94,10 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $categoria = Categoria::findOrFail($id);
+        $categoria->visible = false;
+        $categoria->save();
+
+        return response()->json('ok',200);
     }
 }

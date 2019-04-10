@@ -7,6 +7,7 @@ import Home from './Home';
 import About from './About';
 import Categoria from './Categoria/Index';
 import CategoriaCreate from './Categoria/Create';
+import CategoriaEdit from './Categoria/Edit';
 
 
 export default class Index extends Component {
@@ -20,6 +21,7 @@ export default class Index extends Component {
                     <Route path="/about" exact component={About}/>
                     <Route path="/categorias" exact component={Categoria}/>
                     <Route path="/categorias/create" exact component={CategoriaCreate}/>
+                    <Route path="/categorias/:id/edit" exact component={CategoriaEdit}/>
                 </div>
 
             </Router>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -13,15 +13,38 @@ export default class Index extends Component {
     }
 
     componentDidMount(){
-        axios.get('api/categorias')
+        axios.get('/api/categorias')
             .then( response => {
                 this.setState({
                     categorias: response.data
-                });
-            });
+                })
+            })
+    }
+
+    eliminar(id){
+        axios.delete('/api/categorias/' + id).then(
+            response => {
+                if (response.status == 200) {
+                    var nueva_lista = this.state.categorias;
+
+                    for (var i = 0; i < nueva_lista.length; i++){
+                        if (nueva_lista[i].id == id){
+                            nueva_lista.splice(i, 1);
+                        }
+                    }
+
+                    this.setState({
+                        categorias: nueva_lista
+                    });
+                }
+            }
+        );
     }
 
     render() {
+
+        const { categorias } = this.state;
+
         return (
             <div className="container">
                 <h2>Categorias
@@ -43,19 +66,20 @@ export default class Index extends Component {
                         </thead>
                         <tbody>
                             {
-                                this.state.categorias.map( (categoria, i) => {
-                                    return (
-                                        <tr key={i}>
-                                            <td>{categoria.id}</td>
-                                            <td>{categoria.nombre}</td>
-                                            <td>
-                                                <button className="btn btn-danger">
-                                                    Editar
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    );
-                                })
+                                categorias.map( (categoria, index) => (
+                                    <tr key={index}>
+                                        <td>{categoria.id}</td>
+                                        <td>{categoria.nombre}</td>
+                                        <td>
+                                            <Link to={'/categorias/'+ categoria.id +'/edit'} className="btn btn-success mr-2">
+                                                Editar
+                                            </Link>
+                                            <button className="btn btn-danger" onClick={this.eliminar.bind(this, categoria.id)} >
+                                                Eliminar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
                             }
                         </tbody>
                     </table>
