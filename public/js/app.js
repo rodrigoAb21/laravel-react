@@ -66386,7 +66386,10 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Edit).call(this, props));
     _this.state = {
-      nombre: ''
+      nombre: '',
+      precio: '',
+      categoria_id: '',
+      categorias: []
     };
     _this.manejadorInputs = _this.manejadorInputs.bind(_assertThisInitialized(_this));
     _this.enviar = _this.enviar.bind(_assertThisInitialized(_this));
@@ -66398,9 +66401,12 @@ function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/categorias/' + this.props.match.params.id + '/edit').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/productos/' + this.props.match.params.id + '/edit').then(function (response) {
         _this2.setState({
-          nombre: response.data.nombre
+          nombre: response.data[0].nombre,
+          precio: response.data[0].precio,
+          categoria_id: response.data[0].categoria_id,
+          categorias: response.data[1]
         });
       });
     }
@@ -66414,12 +66420,14 @@ function (_Component) {
     value: function enviar(e) {
       e.preventDefault();
       var history = this.props.history;
-      var categoria = {
-        nombre: this.state.nombre
+      var producto = {
+        nombre: this.state.nombre,
+        precio: this.state.precio,
+        categoria_id: this.refs.selector.value
       };
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.patch('/api/categorias/' + this.props.match.params.id, categoria).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.patch('/api/productos/' + this.props.match.params.id, producto).then(function (response) {
         if (response.status == 200) {
-          history.push('/categorias');
+          history.push('/productos');
         }
       });
     }
@@ -66431,7 +66439,7 @@ function (_Component) {
         autoComplete: "off"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Editar Categoria"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Nuevo Producto"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6"
@@ -66444,14 +66452,45 @@ function (_Component) {
         placeholder: "Nombre",
         name: "nombre",
         onChange: this.manejadorInputs,
-        value: this.state.nombre
-      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        value: this.state.nombre,
+        required: true
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Precio"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "precio",
+        type: "number",
+        className: "form-control",
+        placeholder: "Precio",
+        name: "precio",
+        onChange: this.manejadorInputs,
+        value: this.state.precio,
+        required: true
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Categoria"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        required: true,
+        ref: "selector",
+        className: "form-control",
+        name: "categoria_id",
+        id: "categoria_id",
+        value: this.state.categoria_id,
+        onChange: this.manejadorInputs
+      }, this.state.categorias.map(function (categoria, index) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: index,
+          value: categoria.id
+        }, categoria.nombre);
+      }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-sm"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         className: "btn btn-danger mr-2",
-        to: "/categorias"
+        to: "/productos"
       }, "Atras"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit",
         className: "btn btn-success"
