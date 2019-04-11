@@ -2,16 +2,26 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios'
 
-export default class Create extends Component {
-    constructor(){
-        super();
+export default class Edit extends Component {
+    constructor(props){
+        super(props);
         this.state = {
-          nombre: ''
+            nombre: ''
         };
 
         this.manejadorInputs = this.manejadorInputs.bind(this);
         this.enviar = this.enviar.bind(this);
 
+    }
+
+
+    componentDidMount(){
+        axios.get('/api/categorias/' + this.props.match.params.id + '/edit')
+            .then( response => {
+                this.setState({
+                    nombre: response.data.nombre
+                })
+            })
     }
 
     manejadorInputs(evento){
@@ -29,7 +39,7 @@ export default class Create extends Component {
             nombre: this.state.nombre
         };
 
-        axios.post('/api/categorias', categoria).then(
+        axios.patch('/api/categorias/' + this.props.match.params.id, categoria).then(
             response => {
                 if (response.status == 200){
                     history.push('/categorias')
@@ -45,21 +55,20 @@ export default class Create extends Component {
 
                 <form onSubmit={this.enviar} autoComplete="off" >
                     <div className="container">
-                        <h2>Nueva Cateogria</h2>
+                        <h2>Editar Categoria</h2>
                         <br/>
                         <div className="row">
                             <div className="col-6">
                                 <div className="form-group">
                                     <label>Nombre</label>
                                     <input
-                                        id="nombre"
+                                        id="name"
                                         type="text"
                                         className="form-control"
                                         placeholder="Nombre"
                                         name="nombre"
                                         onChange={this.manejadorInputs}
                                         value={this.state.nombre}
-                                        required
                                     />
                                 </div>
                             </div>
@@ -76,7 +85,6 @@ export default class Create extends Component {
                         </div>
                     </div>
                 </form>
-
 
 
         );

@@ -8,24 +8,24 @@ export default class Index extends Component {
     constructor(){
         super();
         this.state = {
-            categorias: []
+            productos: []
         };
     }
 
     componentDidMount(){
-        axios.get('/api/categorias')
+        axios.get('/api/productos')
             .then( response => {
                 this.setState({
-                    categorias: response.data
+                    productos: response.data
                 })
             })
     }
 
     eliminar(id){
-        axios.delete('/api/categorias/' + id).then(
+        axios.delete('/api/productos/' + id).then(
             response => {
                 if (response.status == 200) {
-                    var nueva_lista = this.state.categorias;
+                    var nueva_lista = this.state.productos;
 
                     for (var i = 0; i < nueva_lista.length; i++){
                         if (nueva_lista[i].id == id){
@@ -34,7 +34,7 @@ export default class Index extends Component {
                     }
 
                     this.setState({
-                        categorias: nueva_lista
+                        productos: nueva_lista
                     });
                 }
             }
@@ -43,14 +43,14 @@ export default class Index extends Component {
 
     render() {
 
-        const { categorias } = this.state;
+        const { productos } = this.state;
 
         return (
             <div className="container">
-                <h2>Gestionar Categorias
-                    <Link to="/categorias/create">
+                <h2>Gestionar Productos
+                    <Link to="/productos/create">
                         <button className="btn btn-primary float-right">
-                            Nueva Categoria
+                            Nuevo Producto
                         </button>
                     </Link>
                 </h2>
@@ -61,20 +61,24 @@ export default class Index extends Component {
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Nombre</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Categoria</th>
                             <th className="w-25" scope="col">Opciones</th>
                         </tr>
                         </thead>
                         <tbody>
                             {
-                                categorias.map( (categoria, index) => (
+                                productos.map( (producto, index) => (
                                     <tr key={index}>
-                                        <td>{categoria.id}</td>
-                                        <td>{categoria.nombre}</td>
+                                        <td>{producto.id}</td>
+                                        <td>{producto.nombre}</td>
+                                        <td>{producto.precio}</td>
+                                        <td>{producto.categoria.nombre}</td>
                                         <td>
-                                            <Link to={'/categorias/'+ categoria.id +'/edit'} className="btn btn-success mr-2">
+                                            <Link to={'/productos/'+ producto.id +'/edit'} className="btn btn-success mr-2">
                                                 Editar
                                             </Link>
-                                            <button className="btn btn-danger" onClick={this.eliminar.bind(this, categoria.id)} >
+                                            <button className="btn btn-danger" onClick={this.eliminar.bind(this, producto.id)} >
                                                 Eliminar
                                             </button>
                                         </td>
