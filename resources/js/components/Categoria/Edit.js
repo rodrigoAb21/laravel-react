@@ -42,7 +42,6 @@ export default class Edit extends Component {
         axios.patch('/api/categorias/' + this.props.match.params.id, categoria).then(
             response => {
                 if (response.status == 200){
-                    console.log('todo ok');
                     history.push('/categorias')
                 }
             }

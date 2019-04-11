@@ -65707,7 +65707,6 @@ function (_Component) {
       };
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.patch('/api/categorias/' + this.props.match.params.id, categoria).then(function (response) {
         if (response.status == 200) {
-          console.log('todo ok');
           history.push('/categorias');
         }
       });
@@ -65941,29 +65940,35 @@ function (_Component) {
         className: "navbar-toggler",
         type: "button",
         "data-toggle": "collapse",
-        "data-target": "#navbarSupportedContent",
-        "aria-controls": "navbarSupportedContent",
+        "data-target": "#navbarNav",
+        "aria-controls": "navbarNav",
         "aria-expanded": "false",
         "aria-label": "Toggle navigation"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "navbar-toggler-icon"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "collapse navbar-collapse",
-        id: "navbarSupportedContent"
+        id: "navbarNav"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "navbar-nav mr-auto"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "nav-item"
+        className: "nav-item",
+        "data-toggle": "collapse",
+        "data-target": ".navbar-collapse.show"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
         className: "nav-link",
         to: "/"
       }, "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "nav-item"
+        className: "nav-item",
+        "data-toggle": "collapse",
+        "data-target": ".navbar-collapse.show"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
         className: "nav-link",
         to: "/about"
       }, "About")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "nav-item"
+        className: "nav-item",
+        "data-toggle": "collapse",
+        "data-target": ".navbar-collapse.show"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
         className: "nav-link",
         to: "/categorias"
