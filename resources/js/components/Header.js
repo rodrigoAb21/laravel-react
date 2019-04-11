@@ -17,7 +17,7 @@ export default class Header extends Component {
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-                                <NavLink className="nav-link" to="/">Home</NavLink>
+                                <NavLink className="nav-link" exact strict to="/">Home</NavLink>
                             </li>
                             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
                                 <NavLink className="nav-link" to="/about">About</NavLink>

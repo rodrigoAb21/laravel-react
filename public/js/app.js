@@ -65957,6 +65957,8 @@ function (_Component) {
         "data-target": ".navbar-collapse.show"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
         className: "nav-link",
+        exact: true,
+        strict: true,
         to: "/"
       }, "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "nav-item",
