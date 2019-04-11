@@ -47,7 +47,7 @@ export default class Index extends Component {
 
         return (
             <div className="container">
-                <h2>Categorias
+                <h2>Gestionar Categorias
                     <Link to="/categorias/create">
                         <button className="btn btn-primary float-right">
                             Nueva Categoria

@@ -53,36 +53,40 @@ export default class Edit extends Component {
 
     render() {
         return (
-            <form onSubmit={this.enviar} autoComplete="off" >
-                <div className="container">
-                    <div className="row">
-                        <div className="col-6">
-                            <div className="form-group">
-                                <label>Nombre</label>
-                                <input
-                                    id="name"
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Nombre"
-                                    name="nombre"
-                                    onChange={this.manejadorInputs}
-                                    value={this.state.nombre}
-                                />
+
+                <form onSubmit={this.enviar} autoComplete="off" >
+                    <div className="container">
+                        <h2>Editar Categoria</h2>
+                        <br/>
+                        <div className="row">
+                            <div className="col-6">
+                                <div className="form-group">
+                                    <label>Nombre</label>
+                                    <input
+                                        id="name"
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Nombre"
+                                        name="nombre"
+                                        onChange={this.manejadorInputs}
+                                        value={this.state.nombre}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-sm">
+                                <Link className="btn btn-danger mr-2" to="/categorias">
+                                    Atras
+                                </Link>
+                                <button type="submit" className="btn btn-success">
+                                    Guardar
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-sm">
-                            <Link className="btn btn-danger mr-2" to="/categorias">
-                                Atras
-                            </Link>
-                            <button type="submit" className="btn btn-success">
-                                Guardar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                </form>
+
 
         );
     }
