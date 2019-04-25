@@ -27,7 +27,7 @@ export default class Create extends Component {
                 this.setState({
                     productos: response.data
                 })
-            })
+            });
     }
 
     manejadorInputs(evento){
@@ -50,8 +50,6 @@ export default class Create extends Component {
             response => {
                 if (response.status == 200){
                     history.push('/ventas')
-                }else{
-                    console.log(response);
                 }
             }
         );
@@ -83,7 +81,7 @@ export default class Create extends Component {
     }
 
     render() {
-        const { tabla } = this.state;
+        var { tabla } = this.state;
 
         return (
 
@@ -160,7 +158,7 @@ export default class Create extends Component {
                                     <thead>
                                     <tr>
                                         <th scope="col">ID</th>
-                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Producto</th>
                                         <th scope="col">Cantidad</th>
                                         <th scope="col">Opc.</th>
                                     </tr>

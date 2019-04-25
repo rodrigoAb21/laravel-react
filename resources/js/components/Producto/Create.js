@@ -29,8 +29,9 @@ export default class Create extends Component {
                 this.setState({
                     categorias: response.data
                 })
-            })
+            });
     }
+
 
     enviar(e){
         e.preventDefault();

@@ -71,6 +71,9 @@ export default class Index extends Component {
                                         <td>{venta.id}</td>
                                         <td>{venta.cliente}</td>
                                         <td>
+                                            <Link to={'/venta/'+ venta.id} className="btn btn-success mr-2">
+                                                <i className="fa fa-eye"></i>
+                                            </Link>
                                             <button className="btn btn-danger" onClick={this.eliminar.bind(this, venta.id)} >
                                                 <i className="fa fa-trash"></i>
                                             </button>

@@ -16,6 +16,7 @@ import ProductoEdit from './Producto/Edit';
 
 import Venta from './Venta/Index';
 import VentaCreate from './Venta/Create';
+import VentaShow from './Venta/Show';
 
 export default class Index extends Component {
     render() {
@@ -36,6 +37,7 @@ export default class Index extends Component {
                     <Route path="/productos/:id/edit" exact component={ProductoEdit}/>
 
                     <Route path="/ventas" exact component={Venta}/>
+                    <Route path="/venta/:id" exact component={VentaShow}/>
                     <Route path="/ventas/create" exact component={VentaCreate}/>
                 </div>
 

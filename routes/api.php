@@ -19,4 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('/categorias', 'Api\CategoriaController');
 Route::resource('/productos', 'Api\ProductoController');
-Route::resource('/ventas', 'Api\VentaController');
+
+Route::get('/ventas', 'Api\VentaController@index');
+Route::get('/ventas/create', 'Api\VentaController@create');
+Route::post('/ventas', 'Api\VentaController@store');
+Route::get('/venta/{id}', 'Api\VentaController@show');
+Route::delete('/ventas/{id}', 'Api\VentaController@destroy');
+

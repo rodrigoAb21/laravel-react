@@ -7,6 +7,7 @@ use App\Producto;
 use App\Venta;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class VentaController extends Controller
 {
@@ -66,7 +67,14 @@ class VentaController extends Controller
      */
     public function show($id)
     {
-        //
+        $venta = Venta::findOrFail($id);
+        $tabla = DB::table('detalle')
+            ->join('producto','detalle.producto_id','=','producto.id')
+            ->where('detalle.venta_id','=',$id)
+            ->select('detalle.producto_id','detalle.cantidad','producto.nombre')
+            ->get();
+
+        return [$venta,$tabla];
     }
 
     /**
