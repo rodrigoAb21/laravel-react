@@ -61,7 +61,6 @@ export default class Index extends Component {
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Cliente</th>
-                            <th scope="col">Precio</th>
                             <th className="w-25" scope="col">Opciones</th>
                         </tr>
                         </thead>
@@ -71,7 +70,6 @@ export default class Index extends Component {
                                     <tr key={index}>
                                         <td>{venta.id}</td>
                                         <td>{venta.cliente}</td>
-                                        <td>{venta.precio_total}</td>
                                         <td>
                                             <button className="btn btn-danger" onClick={this.eliminar.bind(this, venta.id)} >
                                                 <i className="fa fa-trash"></i>

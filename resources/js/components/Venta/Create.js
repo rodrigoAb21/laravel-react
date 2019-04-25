@@ -42,18 +42,35 @@ export default class Create extends Component {
         const { history } = this.props;
 
         const venta = {
-            cliente: this.state.cliente
+            cliente: this.state.cliente,
+            detalle: this.state.tabla
         };
 
         axios.post('/api/ventas', venta).then(
             response => {
                 if (response.status == 200){
                     history.push('/ventas')
+                }else{
+                    console.log(response);
                 }
             }
         );
 
 
+    }
+
+    quitar(id){
+        var t = this.state.tabla;
+
+        for (var i = 0; i < t.length; i++){
+            if (t[i].producto_id == id){
+                t.splice(i, 1);
+            }
+        }
+
+        this.setState({
+            tabla: t
+        });
     }
 
     agregar(){
@@ -156,7 +173,7 @@ export default class Create extends Component {
                                                 <td>{t.nombre}</td>
                                                 <td>{t.cantidad}</td>
                                                 <td>
-                                                    <button className="btn btn-danger" type="button">
+                                                    <button className="btn btn-danger" type="button" onClick={this.quitar.bind(this, t.producto_id)} >
                                                         <i className="fa fa-trash"></i>
                                                     </button>
                                                 </td>

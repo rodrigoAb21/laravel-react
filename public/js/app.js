@@ -66756,12 +66756,30 @@ function (_Component) {
       e.preventDefault();
       var history = this.props.history;
       var venta = {
-        cliente: this.state.cliente
+        cliente: this.state.cliente,
+        detalle: this.state.tabla
       };
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/ventas', venta).then(function (response) {
         if (response.status == 200) {
           history.push('/ventas');
+        } else {
+          console.log(response);
         }
+      });
+    }
+  }, {
+    key: "quitar",
+    value: function quitar(id) {
+      var t = this.state.tabla;
+
+      for (var i = 0; i < t.length; i++) {
+        if (t[i].producto_id == id) {
+          t.splice(i, 1);
+        }
+      }
+
+      this.setState({
+        tabla: t
       });
     }
   }, {
@@ -66781,6 +66799,8 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       var tabla = this.state.tabla;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.enviar,
@@ -66857,7 +66877,8 @@ function (_Component) {
           key: index
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, t.producto_id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, t.nombre), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, t.cantidad), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "btn btn-danger",
-          type: "button"
+          type: "button",
+          onClick: _this3.quitar.bind(_this3, t.producto_id)
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fa fa-trash"
         }))));
@@ -66991,14 +67012,12 @@ function (_Component) {
       }, "ID"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
       }, "Cliente"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        scope: "col"
-      }, "Precio"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         className: "w-25",
         scope: "col"
       }, "Opciones"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, ventas.map(function (venta, index) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: index
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, venta.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, venta.cliente), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, venta.precio_total), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, venta.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, venta.cliente), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "btn btn-danger",
           onClick: _this4.eliminar.bind(_this4, venta.id)
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {

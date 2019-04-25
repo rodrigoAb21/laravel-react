@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Detalle;
 use App\Producto;
 use App\Venta;
 use Illuminate\Http\Request;
@@ -42,6 +43,16 @@ class VentaController extends Controller
         $venta->cliente = $request['cliente'];
         $venta->visible = true;
         $venta->save();
+
+        $cont = 0;
+        while ($cont < count($request['detalle'])) {
+            $detalle = new Detalle();
+            $detalle -> venta_id = $venta -> id;
+            $detalle -> producto_id = $request['detalle'][$cont]['producto_id'];
+            $detalle -> cantidad = $request['detalle'][$cont]['cantidad'];
+            $detalle -> save();
+            $cont = $cont + 1;
+        }
 
         return response()->json('ok',200);
 
