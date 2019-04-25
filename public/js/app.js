@@ -66722,14 +66722,30 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Create).call(this));
     _this.state = {
       cliente: '',
-      precio_total: ''
+      precio_total: '',
+      tabla: [],
+      productos: []
     };
+    _this.txt_cantidad = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.selector = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.manejadorInputs = _this.manejadorInputs.bind(_assertThisInitialized(_this));
     _this.enviar = _this.enviar.bind(_assertThisInitialized(_this));
+    _this.agregar = _this.agregar.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(Create, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/ventas/create').then(function (response) {
+        _this2.setState({
+          productos: response.data
+        });
+      });
+    }
+  }, {
     key: "manejadorInputs",
     value: function manejadorInputs(evento) {
       this.setState(_defineProperty({}, evento.target.name, evento.target.value));
@@ -66740,8 +66756,7 @@ function (_Component) {
       e.preventDefault();
       var history = this.props.history;
       var venta = {
-        cliente: this.state.cliente,
-        precio_total: this.state.precio_total
+        cliente: this.state.cliente
       };
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/ventas', venta).then(function (response) {
         if (response.status == 200) {
@@ -66750,8 +66765,23 @@ function (_Component) {
       });
     }
   }, {
+    key: "agregar",
+    value: function agregar() {
+      var t = this.state.tabla;
+      var s = this.selector.current.value.split('-');
+      t.push({
+        producto_id: s[0],
+        nombre: s[1],
+        cantidad: this.txt_cantidad.current.value
+      });
+      this.setState({
+        tabla: t
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var tabla = this.state.tabla;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.enviar,
         autoComplete: "off"
@@ -66760,10 +66790,10 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Nuevo Venta"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-6"
+        className: "col"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Nombre"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Cliente"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         id: "cliente",
         type: "text",
         className: "form-control",
@@ -66772,20 +66802,66 @@ function (_Component) {
         onChange: this.manejadorInputs,
         value: this.state.cliente,
         required: true
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Precio"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        id: "precio_total",
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Producto"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        required: true,
+        ref: this.selector,
+        className: "form-control",
+        name: "producto_id",
+        id: "producto_id",
+        onChange: this.manejadorInputs
+      }, this.state.productos.map(function (producto, index) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: index,
+          value: producto.id + "-" + producto.nombre
+        }, producto.nombre);
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-4"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Cantidad"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "cantidad",
+        ref: this.txt_cantidad,
         type: "number",
         className: "form-control",
-        placeholder: "Precio Total",
-        name: "precio_total",
-        onChange: this.manejadorInputs,
-        value: this.state.precio_total,
+        placeholder: "cantidad",
+        name: "cantidad",
         required: true
-      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-2 mt-3 pt-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-primary",
+        onClick: this.agregar
+      }, "Agregar"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "table-responsive mt-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        className: "table table-hover table-bordered"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "ID"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "Nombre"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "Cantidad"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "Opc."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, tabla.map(function (t, index) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+          key: index
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, t.producto_id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, t.nombre), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, t.cantidad), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn btn-danger",
+          type: "button"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fa fa-trash"
+        }))));
+      }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-sm"
@@ -66957,8 +67033,8 @@ function (_Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\KAKU\Documents\GitHub\laravel-react\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\KAKU\Documents\GitHub\laravel-react\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/rodrigo/github/laravel-react/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/rodrigo/github/laravel-react/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

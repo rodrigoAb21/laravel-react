@@ -11,7 +11,6 @@ class Detalle extends Model
     public $timestamps = false;
     protected $fillable = [
         'cantidad',
-        'precio',
         'venta_id',
         'producto_id'
     ];

@@ -40,7 +40,6 @@ class VentaController extends Controller
     {
         $venta = new Venta();
         $venta->cliente = $request['cliente'];
-        $venta->precio_total = $request['precio_total'];;
         $venta->visible = true;
         $venta->save();
 

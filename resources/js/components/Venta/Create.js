@@ -8,11 +8,26 @@ export default class Create extends Component {
         this.state = {
             cliente: '',
             precio_total: '',
+            tabla: [],
+            productos: []
         };
+
+        this.txt_cantidad = React.createRef();
+        this.selector = React.createRef();
 
         this.manejadorInputs = this.manejadorInputs.bind(this);
         this.enviar = this.enviar.bind(this);
+        this.agregar = this.agregar.bind(this);
 
+    }
+
+    componentDidMount(){
+        axios.get('/api/ventas/create')
+            .then( response => {
+                this.setState({
+                    productos: response.data
+                })
+            })
     }
 
     manejadorInputs(evento){
@@ -27,8 +42,7 @@ export default class Create extends Component {
         const { history } = this.props;
 
         const venta = {
-            cliente: this.state.cliente,
-            precio_total: this.state.precio_total,
+            cliente: this.state.cliente
         };
 
         axios.post('/api/ventas', venta).then(
@@ -42,7 +56,18 @@ export default class Create extends Component {
 
     }
 
+    agregar(){
+        var t = this.state.tabla;
+        const s = this.selector.current.value.split('-');
+        t.push({producto_id:s[0], nombre:s[1], cantidad:this.txt_cantidad.current.value});
+        this.setState({
+            tabla: t
+        });
+    }
+
     render() {
+        const { tabla } = this.state;
+
         return (
 
                 <form onSubmit={this.enviar} autoComplete="off" >
@@ -50,9 +75,9 @@ export default class Create extends Component {
                         <h2>Nuevo Venta</h2>
                         <br/>
                         <div className="row">
-                            <div className="col-6">
+                            <div className="col">
                                 <div className="form-group">
-                                    <label>Nombre</label>
+                                    <label>Cliente</label>
                                     <input
                                         id="cliente"
                                         type="text"
@@ -65,22 +90,82 @@ export default class Create extends Component {
                                     />
                                 </div>
                             </div>
+
+                        </div>
+                        <hr/>
+                        <div className="row">
                             <div className="col-6">
                                 <div className="form-group">
-                                    <label>Precio</label>
+                                    <label>Producto</label>
+                                    <select
+                                        required
+                                        ref={this.selector}
+                                        className="form-control"
+                                        name="producto_id"
+                                        id="producto_id"
+                                        onChange={this.manejadorInputs}>
+                                        {
+                                            this.state.productos.map( (producto, index) => (
+                                                <option
+                                                    key={index}
+                                                    value={producto.id+"-"+producto.nombre}>
+                                                    {producto.nombre}
+                                                </option>
+                                            ))
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="col-4">
+                                <div className="form-group">
+                                    <label>Cantidad</label>
                                     <input
-                                        id="precio_total"
+                                        id="cantidad"
+                                        ref={this.txt_cantidad}
                                         type="number"
                                         className="form-control"
-                                        placeholder="Precio Total"
-                                        name="precio_total"
-                                        onChange={this.manejadorInputs}
-                                        value={this.state.precio_total}
+                                        placeholder="cantidad"
+                                        name="cantidad"
                                         required
                                     />
                                 </div>
                             </div>
+                            <div className="col-2 mt-3 pt-3">
+                                <button type="button" className="btn btn-primary" onClick={this.agregar}>
+                                    Agregar
+                                </button>
+                            </div>
 
+                        </div>
+                        <div className="row">
+                            <div className="table-responsive mt-3">
+                                <table className="table table-hover table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Opc.</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {
+                                        tabla.map( (t, index) => (
+                                            <tr key={index}>
+                                                <td>{t.producto_id}</td>
+                                                <td>{t.nombre}</td>
+                                                <td>{t.cantidad}</td>
+                                                <td>
+                                                    <button className="btn btn-danger" type="button">
+                                                        <i className="fa fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <div className="row">
                             <div className="col-sm">

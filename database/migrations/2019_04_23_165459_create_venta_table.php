@@ -16,7 +16,6 @@ class CreateVentaTable extends Migration
         Schema::create('venta', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('cliente');
-            $table->float('precio_total');
             $table->boolean('visible')->default(true);
         });
     }
