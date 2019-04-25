@@ -28,6 +28,9 @@ export default class Header extends Component {
                             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
                                 <NavLink className="nav-link" to="/productos">Productos</NavLink>
                             </li>
+                            <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                                <NavLink className="nav-link" to="/ventas">Ventas</NavLink>
+                            </li>
                         </ul>
                     </div>
                 </nav>

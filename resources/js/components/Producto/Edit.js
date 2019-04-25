@@ -70,7 +70,7 @@ export default class Edit extends Component {
                                 <div className="form-group">
                                     <label>Nombre</label>
                                     <input
-                                        id="name"
+                                        id="nombre"
                                         type="text"
                                         className="form-control"
                                         placeholder="Nombre"

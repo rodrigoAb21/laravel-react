@@ -50,7 +50,7 @@ export default class Index extends Component {
                 <h2>Gestionar Productos
                     <Link to="/productos/create">
                         <button className="btn btn-primary float-right">
-                            Nuevo Producto
+                            <i className="fa fa-plus"></i> Nuevo
                         </button>
                     </Link>
                 </h2>
@@ -76,10 +76,10 @@ export default class Index extends Component {
                                         <td>{producto.categoria.nombre}</td>
                                         <td>
                                             <Link to={'/productos/'+ producto.id +'/edit'} className="btn btn-success mr-2">
-                                                Editar
+                                                <i className="fa fa-pen"></i>
                                             </Link>
                                             <button className="btn btn-danger" onClick={this.eliminar.bind(this, producto.id)} >
-                                                Eliminar
+                                                <i className="fa fa-trash"></i>
                                             </button>
                                         </td>
                                     </tr>

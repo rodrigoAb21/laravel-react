@@ -6,10 +6,8 @@ export default class Create extends Component {
     constructor(){
         super();
         this.state = {
-            nombre: '',
-            precio: '',
-            categoria_id: '',
-            categorias: []
+            cliente: '',
+            precio_total: '',
         };
 
         this.manejadorInputs = this.manejadorInputs.bind(this);
@@ -23,30 +21,20 @@ export default class Create extends Component {
         });
     }
 
-    componentDidMount(){
-        axios.get('/api/productos/create')
-            .then( response => {
-                this.setState({
-                    categorias: response.data
-                })
-            })
-    }
-
     enviar(e){
         e.preventDefault();
 
         const { history } = this.props;
 
-        const producto = {
-            nombre: this.state.nombre,
-            precio: this.state.precio,
-            categoria_id: this.refs.selector.value
+        const venta = {
+            cliente: this.state.cliente,
+            precio_total: this.state.precio_total,
         };
 
-        axios.post('/api/productos', producto).then(
+        axios.post('/api/ventas', venta).then(
             response => {
                 if (response.status == 200){
-                    history.push('/productos')
+                    history.push('/ventas')
                 }
             }
         );
@@ -59,20 +47,20 @@ export default class Create extends Component {
 
                 <form onSubmit={this.enviar} autoComplete="off" >
                     <div className="container">
-                        <h2>Nuevo Producto</h2>
+                        <h2>Nuevo Venta</h2>
                         <br/>
                         <div className="row">
                             <div className="col-6">
                                 <div className="form-group">
                                     <label>Nombre</label>
                                     <input
-                                        id="nombre"
+                                        id="cliente"
                                         type="text"
                                         className="form-control"
-                                        placeholder="Nombre"
-                                        name="nombre"
+                                        placeholder="Cliente"
+                                        name="cliente"
                                         onChange={this.manejadorInputs}
-                                        value={this.state.nombre}
+                                        value={this.state.cliente}
                                         required
                                     />
                                 </div>
@@ -81,45 +69,22 @@ export default class Create extends Component {
                                 <div className="form-group">
                                     <label>Precio</label>
                                     <input
-                                        id="precio"
+                                        id="precio_total"
                                         type="number"
                                         className="form-control"
-                                        placeholder="Precio"
-                                        name="precio"
+                                        placeholder="Precio Total"
+                                        name="precio_total"
                                         onChange={this.manejadorInputs}
-                                        value={this.state.precio}
+                                        value={this.state.precio_total}
                                         required
                                     />
-                                </div>
-                            </div>
-
-                            <div className="col-6">
-                                <div className="form-group">
-                                    <label>Categoria</label>
-                                    <select
-                                        required
-                                        ref="selector"
-                                        className="form-control"
-                                        name="categoria_id"
-                                        id="categoria_id"
-                                        onChange={this.manejadorInputs}>
-                                        {
-                                            this.state.categorias.map( (categoria, index) => (
-                                                <option
-                                                    key={index}
-                                                    value={categoria.id}>
-                                                    {categoria.nombre}
-                                                </option>
-                                            ))
-                                        }
-                                    </select>
                                 </div>
                             </div>
 
                         </div>
                         <div className="row">
                             <div className="col-sm">
-                                <Link className="btn btn-danger mr-2" to="/productos">
+                                <Link className="btn btn-danger mr-2" to="/ventas">
                                     Atras
                                 </Link>
                                 <button type="submit" className="btn btn-success">
